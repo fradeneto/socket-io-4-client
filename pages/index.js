@@ -11,21 +11,29 @@ export default function Home() {
     socket = io(serverUrl);
     console.log('connect', serverUrl)
 
+    socket.on('new-plate', (data) => {
+      console.log('plate', data)
+      const plates = plateMessages;
+      plates.push(data);
+      setPlateMessages(plates);
+    })
+
     socket.onAny((event, data) => {
+      console.log(event, data)
+      if (event === 'new-plate'){
+        const plates = plateMessages;
+        plates.push(data);
+        setPlateMessages(plates);
+      }
       // const msgs = messages;
       // msgs.push({
       //   event,
       //   data
       // })
       // setMessages(msgs);
-      console.log(event, data)
     })
 
-    socket.on('new-plate', (data) => {
-      const plates = plateMessages;
-      plates.push(data);
-      setPlateMessages(plates);
-    })
+    
   }
 
   return (
