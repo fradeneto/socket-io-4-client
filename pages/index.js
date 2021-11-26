@@ -3,7 +3,7 @@ import { useState } from 'react';
 import {io} from 'socket.io-client'
 export default function Home() {
   let socket;
-  const [serverUrl, setServerUrl] = useState('http://localhost:3333')
+  const [serverUrl, setServerUrl] = useState(String(process.env.NEXT_PUBLIC_APP_URL))
   const [plateMessages, setPlateMessages] = useState([])
   const [messages, setMessages] = useState([])
 
@@ -41,8 +41,8 @@ export default function Home() {
 
       <div style={{display: 'flex', flex: 1}}>
         <div style={{width: '100%', padding: 10}}>
-          {plateMessages.map(plate => (
-            <div>
+          {plateMessages.map((plate, index) => (
+            <div key={`plate-key-${index}`}>
               {JSON.stringify(plate)}
             </div>
           ))}
