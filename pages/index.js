@@ -4,8 +4,8 @@ import {io} from 'socket.io-client'
 export default function Home() {
   let socket;
   const [serverUrl, setServerUrl] = useState(String(process.env.NEXT_PUBLIC_APP_URL))
-  const [plateMessages, setPlateMessages] = useState([])
-  const [messages, setMessages] = useState([])
+  const [plateNew, setPlateNew] = useState()
+  const [plateOld, setPlateOld] = useState()
 
   const handleConnection = () => {
     socket = io(serverUrl);
@@ -13,24 +13,17 @@ export default function Home() {
 
     socket.on('new-plate', (data) => {
       console.log('plate', data)
-      const plates = plateMessages;
-      plates.push(data);
-      setPlateMessages(plates);
+      setPlateOld(plateNew);
+      setPlateNew(data)
     })
 
     socket.onAny((event, data) => {
-      console.log(event, data)
-      if (event === 'new-plate'){
-        const plates = plateMessages;
-        plates.push(data);
-        setPlateMessages(plates);
-      }
-      // const msgs = messages;
-      // msgs.push({
-      //   event,
-      //   data
-      // })
-      // setMessages(msgs);
+      console.log(`onAny: ${event}`, data)
+      // if (event === 'new-plate'){
+      //   const plates = plateMessages;
+      //   plates.push(data);
+      //   setPlateMessages(plates);
+      // }
     })
 
     
@@ -49,11 +42,18 @@ export default function Home() {
 
       <div style={{display: 'flex', flex: 1}}>
         <div style={{width: '100%', padding: 10}}>
-          {plateMessages.map((plate, index) => (
-            <div key={`plate-key-${index}`}>
-              {JSON.stringify(plate)}
-            </div>
-          ))}
+          {!!plateNew && (
+            <>
+              {JSON.stringify(plateNew)}
+            </>
+          )}
+        </div>
+        <div style={{width: '100%', padding: 10, marginTop: 20}}>
+          {!!plateOld && (
+            <>
+              {JSON.stringify(plateOld)}
+            </>
+          )}
         </div>
       </div>
     </div>
