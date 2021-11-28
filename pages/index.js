@@ -13,8 +13,9 @@ export default function Home() {
 
     socket.on('new-plate', (data) => {
       console.log('plate', data)
-      if (!!plateNew){
-        setPlateOld(plateNew);
+      const old = plateNew;
+      if (!!old){
+        setPlateOld(old);
       }
       setPlateNew(data)
     })
@@ -42,7 +43,7 @@ export default function Home() {
         <button onClick={handleConnection}>Conectar</button>
       </div>
 
-      <div style={{display: 'flex', flex: 1}}>
+      <div style={{display: 'flex', flex: 1, width: '100%'}}>
         <div style={{width: '100%', padding: 10, textAlign: 'center'}}>
           {!!plateNew && (
             <>
@@ -59,6 +60,7 @@ export default function Home() {
         <div style={{width: '100%', padding: 10, marginTop: 20, textAlign: 'center'}}>
           {!!plateOld && (
             <>
+              <hr/>
               <div>
                 <img src={`/camera/${plateOld.filename}`} alt="" style={{width: '100%'}} />
               </div>
