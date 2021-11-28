@@ -13,10 +13,11 @@ export default function Home() {
 
     socket.on('new-plate', (data) => {
       console.log('plate', data)
-      const old = plateNew;
-      if (!!old){
-        setPlateOld(old);
-      }
+      // const old = plateNew;
+      // if (!!old){
+      //   setPlateOld(old);
+      // }
+      setPlateOld(data)
       setPlateNew(data)
     })
 
@@ -44,7 +45,7 @@ export default function Home() {
       </div>
 
       <div style={{display: 'flex', flex: 1, width: '100%'}}>
-        <div style={{width: '100%', padding: 10, textAlign: 'center'}}>
+        <div style={{display: 'flex', flex: 1, flexDirection: 'column', width: '100%', padding: 10, textAlign: 'center'}}>
           {!!plateNew && (
             <>
               <div>
@@ -57,7 +58,7 @@ export default function Home() {
             </>
           )}
         </div>
-        <div style={{width: '100%', padding: 10, marginTop: 20, textAlign: 'center'}}>
+        <div style={{display: 'flex', flex: 1, flexDirection: 'column', width: '100%', padding: 10, marginTop: 20, textAlign: 'center'}}>
           {!!plateOld && (
             <>
               <hr/>
