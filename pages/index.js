@@ -13,7 +13,9 @@ export default function Home() {
 
     socket.on('new-plate', (data) => {
       console.log('plate', data)
-      setPlateOld(plateNew);
+      if (!!plateNew){
+        setPlateOld(plateNew);
+      }
       setPlateNew(data)
     })
 
@@ -45,10 +47,11 @@ export default function Home() {
           {!!plateNew && (
             <>
               <div>
-                <img src={`/camera/${plateNew.filename}`} alt="" />
+                <img src={`/camera/${plateNew.filename}`} alt="" style={{width: '100%'}} />
               </div>
               <div>
-                {plateNew.plate_used}
+                <h1>{plateNew.plate_used}</h1>
+                <h3>{JSON.stringify(plateNew.candidates_r)}</h3>
               </div>
             </>
           )}
@@ -57,10 +60,11 @@ export default function Home() {
           {!!plateOld && (
             <>
               <div>
-                <img src={`/camera/${plateOld.filename}`} alt="" />
+                <img src={`/camera/${plateOld.filename}`} alt="" style={{width: '100%'}} />
               </div>
               <div>
-                {plateOld.plate_used}
+                <h1>{plateOld.plate_used}</h1>
+                <h3>{JSON.stringify(plateOld.candidates_r)}</h3>
               </div>
             </>
           )}
