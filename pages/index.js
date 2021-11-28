@@ -41,17 +41,27 @@ export default function Home() {
       </div>
 
       <div style={{display: 'flex', flex: 1}}>
-        <div style={{width: '100%', padding: 10}}>
+        <div style={{width: '100%', padding: 10, textAlign: 'center'}}>
           {!!plateNew && (
             <>
-              {JSON.stringify(plateNew)}
+              <div>
+                <img src={`/camera/${plateNew.filename}`} alt="" />
+              </div>
+              <div>
+                {plateNew.plate_used}
+              </div>
             </>
           )}
         </div>
-        <div style={{width: '100%', padding: 10, marginTop: 20}}>
+        <div style={{width: '100%', padding: 10, marginTop: 20, textAlign: 'center'}}>
           {!!plateOld && (
             <>
-              {JSON.stringify(plateOld)}
+              <div>
+                <img src={`/camera/${plateOld.filename}`} alt="" />
+              </div>
+              <div>
+                {plateOld.plate_used}
+              </div>
             </>
           )}
         </div>
