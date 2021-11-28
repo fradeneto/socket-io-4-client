@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import { useState } from 'react';
 import {io} from 'socket.io-client'
+import _ from 'lodash';
+
 export default function Home() {
   let socket;
   const [serverUrl, setServerUrl] = useState(String(process.env.NEXT_PUBLIC_APP_URL))
@@ -13,11 +15,10 @@ export default function Home() {
 
     socket.on('new-plate', (data) => {
       console.log('plate', data)
-      // const old = plateNew;
-      // if (!!old){
-      //   setPlateOld(old);
-      // }
-      setPlateOld(data)
+      if (!!plateNew){
+        const old = _.clone(plateNew)
+        setPlateOld(old);
+      }
       setPlateNew(data)
     })
 
@@ -44,7 +45,7 @@ export default function Home() {
         <button onClick={handleConnection}>Conectar</button>
       </div>
 
-      <div style={{display: 'flex', flex: 1, width: '100%'}}>
+      <div style={{display: 'flex', flex: 1, flexDirection: 'column', width: '100%'}}>
         <div style={{display: 'flex', flex: 1, flexDirection: 'column', width: '100%', padding: 10, textAlign: 'center'}}>
           {!!plateNew && (
             <>
