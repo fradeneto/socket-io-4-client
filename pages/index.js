@@ -8,16 +8,19 @@ export default function Home() {
   const [serverUrl, setServerUrl] = useState(String(process.env.NEXT_PUBLIC_APP_URL))
   const [plateNew, setPlateNew] = useState()
   const [plateOld, setPlateOld] = useState()
+  const [isConnected, setIsConnected] = useState(false)
 
   const handleConnection = () => {
     socket = io(serverUrl);
     console.log('connect', serverUrl)
+    setIsConnected(true)
 
     socket.on('new-plate', (data) => {
       console.log('plate', data)
       if (!!plateNew){
         const old = _.clone(plateNew)
         setPlateOld(old);
+        console.log('old setted:', old)
       }
       setPlateNew(data)
     })
@@ -42,7 +45,7 @@ export default function Home() {
 
       <div>
         <input value={serverUrl} onChange={(e) => setServerUrl(e.target.value)} />
-        <button onClick={handleConnection}>Conectar</button>
+        <button onClick={handleConnection}>{isConnected ? 'Desconectar' : 'Conectar'}</button>
       </div>
 
       <div style={{display: 'flex', flex: 1, flexDirection: 'column', width: '100%'}}>
